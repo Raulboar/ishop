@@ -44,7 +44,7 @@ class CreateOrderForm extends React.Component {
         <form onSubmit={this.onSubmit}>
           <br />
           <div>
-           <label for="clientname">clientname:</label>
+           <label htmlFor="clientname">clientname:</label>
            <input 
              name = "clientname"
              type = "box"
@@ -53,7 +53,7 @@ class CreateOrderForm extends React.Component {
             />
           </div>
           <div>          
-            <label for="itemlist">itemlist:</label>
+            <label htmlFor="itemlist">itemlist:</label>
             <input 
              name = "itemlist"
              type = "box"

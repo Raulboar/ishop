@@ -6,7 +6,7 @@ const _ = require('lodash');
 const {
     orderSchema
 } = require('../../schema/order');
-
+const maxLength=30;
 
 
 const addOrder = (req, res) => {
@@ -97,7 +97,7 @@ const getAllOrders = (req, res) => {
         if (err) {
             console.log('An error has ocurred: ' + err);
         }
-        console.log('orders = ' + result)
+        console.log('orders1 = ' + JSON.stringify(result))
         res.send({
 
 
@@ -115,7 +115,7 @@ const getOrderById = (req, res) => {
         if (err) {
             console.log('An error has ocurred: ' + err);
         }
-        console.log('orders = ' + result)
+        console.log('orders2 = ' + result)
         res.send({
             "orders": result
         });
@@ -124,25 +124,39 @@ const getOrderById = (req, res) => {
 }
 
 const getOrderByClientName = (req, res) =>{
-    console.log('OrdersController.getOrderByClientName');
+    console.log('OrdersController.getOrderByClientName ' + req.params.clientname);
+    
+    function isAName(str){
+       return /^[a-zA-Z]+$/.test(str) 
+     }
+    if (req.params.clientname.length > maxLength){
+        res.send({
+           text:"Too long" 
+        })
+      return
+    }
+    if(!isAName(req.params.clientname)){
+        res.send({
+            text:"That is not a name"
+       })
+      return    
+    }
+    
     db.getOrderByClientName({
         clientname: req.params.clientname
     }, function (err, result) {
         if (err) {
             console.log('An error has ocurred: ' + err);
         }
-       console.log("result=" + result) 
+       console.log("resultz=" + result) 
        if(result){
+           console.log('hereeeee')
         res.send({
             "order": result
         });
        }
-    //    if(!result){
-    //    res.send({
-    //     "order": "The order does not exist"
-    //      });
-    //     }
-    }); 
+       }); 
+ 
 }
 
 const getOrdersWhereTotalIsOver = (req,res) => {
@@ -153,7 +167,7 @@ const getOrdersWhereTotalIsOver = (req,res) => {
         if (err) {
             console.log('An error has ocurred: ' + err);
         }
-        console.log('orders = ' + result)
+        console.log('orders3 = ' + result)
         res.send({
             "orders": result
         });
@@ -168,7 +182,7 @@ const getOrdersWhereIsThisItem = (req,res) => {
         if (err) {
             console.log('An error has ocurred: ' + err);
         }
-        console.log('orders = ' + result)
+        console.log('orders4 = ' + result)
         res.send({
             "orders": result
         });
@@ -234,7 +248,7 @@ const editOrderById = (req, res) => {
         if (err) {
             console.log('An error has ocurred: ' + err);
         }
-        console.log('orders = ' + result)
+        console.log('orders5 = ' + result)
         res.send({
             "orders": result
         });

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import ShopOrdersList from '../../components/shopOrders/list';
 import ShopOrderCreateForm from '../../components/shopOrders/createForm';
-import ShopOrdersSearch from '../../components/shopOrders/search';
+import SearchOrderByClientName from '../../components/shopOrders/search';
 class Orders extends Component {
     state = {
          orders: [],
@@ -15,9 +15,6 @@ class Orders extends Component {
        this.getOrderbyClientName=this.getOrderbyClientName.bind(this);
    }
    
-   
-   
-   
     async getOrderbyClientName(data) {
         console.log('Getting all orders from back end server =');
         const selectedOrderForGet = this.state.selectedOrderForGet;
@@ -26,7 +23,6 @@ class Orders extends Component {
         this.ShopOrdersList();
         try {
             const result = await axios.get('http://localhost:4000/orders/clientname/' +clientname, data);
-
         }
         catch(error) {
             console.log('error');
@@ -41,9 +37,10 @@ class Orders extends Component {
 
 async componentDidMount() {
     try {
+        console.log('state orders ' + JSON.stringify(this.state.orders))
         const result = await axios.get('http://localhost:4000/orders');
 
-        console.log(result);
+        console.log('I am here ' + JSON.stringify(result));
         const orders = result.data.result;
         
         this.setState({ orders: orders });
@@ -69,7 +66,7 @@ async componentDidMount() {
  
  render() {
     const orders = this.state.orders;
-    const showSearch = this.state.ShopOrdersSearch;  
+    const showSearch = this.state.SearchOrderByClientName;  
     console.log('Render');
 
 
@@ -77,7 +74,7 @@ async componentDidMount() {
         <div>
           <ShopOrderCreateForm orders />
           <ShopOrdersList orders = {orders} />
-          <ShopOrdersSearch />   
+          <SearchOrderByClientName />   
       </div>
     );
  }
